@@ -14,6 +14,9 @@ class BookingHistoryCard extends StatelessWidget {
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: SizedBox(
         height: 150,
         child: Row(
@@ -33,30 +36,37 @@ class BookingHistoryCard extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     booking.sportCenterName,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
+                      fontFamily: 'Nunito',
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   Text(
                     '${booking.date}, ${booking.time}',
                     style: const TextStyle(
                       color: Colors.grey,
+                      fontFamily: 'Nunito',
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   Text(
-                    'Pemesan: ${booking.userName}',
+                    'Booked by: ${booking.userName}',
+                    style: const TextStyle(
+                      fontFamily: 'Nunito',
+                    ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   Text(
-                    'Harga: ${booking.bookingPrice}',
+                    'Price: ${booking.bookingPrice}',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Nunito',
                     ),
                   ),
                 ],

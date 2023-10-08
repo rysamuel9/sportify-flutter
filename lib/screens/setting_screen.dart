@@ -21,117 +21,108 @@ class _SettingScreenState extends State<SettingScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SizedBox(height: 20),
-            Card(
-              elevation: 1,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: InkWell(
-                onTap: () {
-                  _showUnderDevelopmentDialog(context);
-                },
-                child: const ListTile(
-                  leading: Icon(
-                    Icons.settings,
-                    size: 24,
-                  ),
-                  title: Text(
-                    'Setting',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
+            _buildCard(
+              Icons.settings,
+              'Settings',
+              () {
+                _showUnderDevelopmentDialog(context);
+              },
             ),
             const SizedBox(height: 20),
-            Card(
-              elevation: 1,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: InkWell(
-                onTap: () {
-                  _showUnderDevelopmentDialog(context);
-                },
-                child: const ListTile(
-                  leading: Icon(
-                    Icons.logout,
-                    size: 24,
-                  ),
-                  title: Text(
-                    'Logout',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
+            _buildCard(
+              Icons.logout,
+              'Logout',
+              () {
+                _showUnderDevelopmentDialog(context);
+              },
             ),
             const SizedBox(height: 20),
-            Card(
-              elevation: 1,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    leading: const Icon(
-                      Icons.notifications,
-                      size: 24,
-                    ),
-                    title: const Text(
-                      'Terima Push Notification',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    trailing: Switch(
-                      value: _pushNotification,
-                      onChanged: (value) {
-                        setState(() {
-                          _pushNotification = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            _buildSwitchCard(
+              Icons.notifications,
+              'Receive Push Notifications',
+              _pushNotification,
+              (value) {
+                setState(() {
+                  _pushNotification = value;
+                });
+              },
             ),
             const SizedBox(height: 20),
-            Card(
-              elevation: 1,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    leading: const Icon(
-                      Icons.email,
-                      size: 24,
-                    ),
-                    title: const Text(
-                      'Terima Promo lewat Email',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    trailing: Switch(
-                      value: _promoEmail,
-                      onChanged: (value) {
-                        setState(() {
-                          _promoEmail = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+            _buildSwitchCard(
+              Icons.email,
+              'Receive Promos via Email',
+              _promoEmail,
+              (value) {
+                setState(() {
+                  _promoEmail = value;
+                });
+              },
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildCard(IconData icon, String title, VoidCallback onPressed) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: InkWell(
+        onTap: onPressed,
+        child: ListTile(
+          leading: Icon(
+            icon,
+            size: 24,
+            color: Colors.blue,
+          ),
+          title: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontFamily: 'Nunito',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSwitchCard(
+    IconData icon,
+    String title,
+    bool value,
+    ValueChanged<bool> onChanged,
+  ) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: Icon(
+              icon,
+              size: 24,
+              color: Colors.blue,
+            ),
+            title: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontFamily: 'Nunito',
+              ),
+            ),
+            trailing: Switch(
+              value: value,
+              onChanged: onChanged,
+              activeColor: Colors.blue,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -161,15 +152,17 @@ class _SettingScreenState extends State<SettingScreen> {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Nunito',
                     ),
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
                   child: Text(
-                    'Fitur ini masih dalam pengembangan.',
+                    'This feature is still under development.',
                     style: TextStyle(
                       fontSize: 16,
+                      fontFamily: 'Nunito',
                     ),
                   ),
                 ),
@@ -184,6 +177,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     'OK',
                     style: TextStyle(
                       fontSize: 16,
+                      fontFamily: 'Nunito',
                     ),
                   ),
                 ),

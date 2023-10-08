@@ -20,7 +20,13 @@ class PaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment'),
+        title: const Text(
+          'Payment',
+          style: TextStyle(
+            fontSize: 20,
+            fontFamily: 'Nunito',
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -29,51 +35,51 @@ class PaymentScreen extends StatelessWidget {
           children: [
             const Text(
               'Payment Summary',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Nunito',
+              ),
             ),
             const SizedBox(height: 16),
             Card(
               elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Sport Center: $sportCenterName',
-                      style: const TextStyle(fontSize: 18),
+                    buildPaymentInfo('Sport Center:', sportCenterName),
+                    buildPaymentInfo('Location:', location),
+                    buildPaymentInfo(
+                      'Date:',
+                      '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Location: $location',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Date: ${selectedDate.toLocal()}',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Time: ${selectedTime.format(context)}',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Booking Price: $bookingPrice',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            _showPaymentSuccessDialog(context);
-                          },
-                          child: const Text('Pay Now'),
+                    buildPaymentInfo('Time:', selectedTime.format(context)),
+                    buildPaymentInfo('Booking Price:', bookingPrice),
+                    const SizedBox(height: 24),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _showLoadingDialog(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 32,
+                          ),
                         ),
-                      ],
+                        child: const Text(
+                          'Pay Now',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Nunito',
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -85,19 +91,87 @@ class PaymentScreen extends StatelessWidget {
     );
   }
 
+  Widget buildPaymentInfo(String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Nunito',
+          ),
+        ),
+        Text(
+          value,
+          style: const TextStyle(
+            fontSize: 18,
+            fontFamily: 'Nunito',
+          ),
+        ),
+        const SizedBox(height: 12),
+      ],
+    );
+  }
+
+  void _showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.of(context, rootNavigator: true).pop();
+      _showPaymentSuccessDialog(context);
+    });
+  }
+
   void _showPaymentSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Payment Successful'),
-          content: const Text('Your payment has been successfully processed.'),
+          title: const Row(
+            children: [
+              Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 32,
+              ),
+              SizedBox(width: 8),
+              Text(
+                'Payment Successful',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Nunito',
+                ),
+              ),
+            ],
+          ),
+          content: const Text(
+            'Your payment has been successfully processed.',
+            style: TextStyle(
+              fontSize: 16,
+              fontFamily: 'Nunito',
+            ),
+          ),
           actions: <Widget>[
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
-              child: const Text('OK'),
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'Nunito',
+                ),
+              ),
             ),
           ],
         );

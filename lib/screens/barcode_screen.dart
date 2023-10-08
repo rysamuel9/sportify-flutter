@@ -13,13 +13,22 @@ class QRCodeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            QrImage(
+            QrImageView(
               data: userData,
               version: QrVersions.auto,
               size: 200.0,
+              backgroundColor: Colors.white,
+              // ignore: deprecated_member_use
+              foregroundColor: Colors.black,
             ),
             const SizedBox(height: 20.0),
-            const Text('Tunjukan dan Scan QR Code ini untuk masuk.'),
+            const Text(
+              'Show and Scan this QR Code to check-in.',
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'Nunito',
+              ),
+            ),
           ],
         ),
       ),

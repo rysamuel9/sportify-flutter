@@ -4,9 +4,11 @@ class CategoryCard extends StatelessWidget {
   final String categoryName;
   final IconData categoryIcon;
 
-  const CategoryCard(
-      {Key? key, required this.categoryName, required this.categoryIcon})
-      : super(key: key);
+  const CategoryCard({
+    Key? key,
+    required this.categoryName,
+    required this.categoryIcon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +30,19 @@ class CategoryCard extends StatelessWidget {
               color: Colors.blue,
             ),
             const SizedBox(height: 10),
-            Text(
-              categoryName,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+            Flexible(
+              child: Text(
+                categoryName,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontFamily: 'Nunito',
+                ),
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
               ),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              textAlign: TextAlign.center,
             ),
           ],
         ),

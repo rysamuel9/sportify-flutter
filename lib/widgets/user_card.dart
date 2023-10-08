@@ -9,31 +9,39 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(
+    return Container(
+      margin: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
         borderRadius: BorderRadius.circular(10.0),
       ),
-      margin: const EdgeInsets.all(10),
-      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Halo, $userName!',
+              'Hello, $userName!',
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
+                fontFamily: 'Nunito',
               ),
             ),
             const SizedBox(height: 10),
             Row(
               children: <Widget>[
                 const Icon(
-                  Icons.discount_outlined,
+                  Icons.star_outline,
                   color: Colors.blue,
                 ),
                 const SizedBox(width: 5),
@@ -41,15 +49,20 @@ class UserCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Poin: $userPoints',
+                      'Points: $userPoints',
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black,
+                        fontFamily: 'Nunito',
                       ),
                     ),
                     const Text(
-                      'Kumpulkan point sebanyaknya untuk dapetin diskon!',
-                      style: TextStyle(fontSize: 12, color: Colors.black),
+                      'Collect as many points as possible to get discounts!',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        fontFamily: 'Nunito',
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
