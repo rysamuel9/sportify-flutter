@@ -1,3 +1,4 @@
+import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:sportify/screens/sport_center_detail_screen.dart';
 import '../models/sport_center.dart';
@@ -37,6 +38,13 @@ class SportCenterItem extends StatelessWidget {
 
   const SportCenterItem({Key? key, required this.sportCenter})
       : super(key: key);
+
+  String _truncateAddress(String address) {
+    const maxLength = 50;
+    return (address.length <= maxLength)
+        ? address
+        : '${address.substring(0, maxLength)}...';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,29 +95,63 @@ class SportCenterItem extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      sportCenter.location,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontFamily: 'Nunito',
-                      ),
+                    Row(
+                      children: <Widget>[
+                        const Icon(
+                          FeatherIcons.mapPin,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            _truncateAddress(sportCenter.location),
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontFamily: 'Nunito',
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      'Buka: ${sportCenter.openDays} - ${sportCenter.openTime}',
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontFamily: 'Nunito',
-                      ),
+                    Row(
+                      children: <Widget>[
+                        const Icon(
+                          FeatherIcons.clock,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Buka: ${sportCenter.openDays} - ${sportCenter.openTime}',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontFamily: 'Nunito',
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                      'Harga: ${sportCenter.bookingPrice}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        fontFamily: 'Nunito',
-                      ),
+                    Row(
+                      children: <Widget>[
+                        const Icon(
+                          FeatherIcons.dollarSign,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Harga: ${sportCenter.bookingPrice}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            fontFamily: 'Nunito',
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

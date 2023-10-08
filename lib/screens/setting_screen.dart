@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'payment_method_screen.dart';
+
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
@@ -15,175 +17,158 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(height: 20),
-            _buildCard(
-              Icons.settings,
-              'Settings',
-              () {
-                _showUnderDevelopmentDialog(context);
-              },
-            ),
-            const SizedBox(height: 20),
-            _buildCard(
-              Icons.logout,
-              'Logout',
-              () {
-                _showUnderDevelopmentDialog(context);
-              },
-            ),
-            const SizedBox(height: 20),
-            _buildSwitchCard(
-              Icons.notifications,
-              'Receive Push Notifications',
-              _pushNotification,
-              (value) {
-                setState(() {
-                  _pushNotification = value;
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-            _buildSwitchCard(
-              Icons.email,
-              'Receive Promos via Email',
-              _promoEmail,
-              (value) {
-                setState(() {
-                  _promoEmail = value;
-                });
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCard(IconData icon, String title, VoidCallback onPressed) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: InkWell(
-        onTap: onPressed,
-        child: ListTile(
-          leading: Icon(
-            icon,
-            size: 24,
-            color: Colors.blue,
-          ),
-          title: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontFamily: 'Nunito',
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSwitchCard(
-    IconData icon,
-    String title,
-    bool value,
-    ValueChanged<bool> onChanged,
-  ) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         children: <Widget>[
-          ListTile(
-            leading: Icon(
-              icon,
-              size: 24,
-              color: Colors.blue,
-            ),
-            title: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontFamily: 'Nunito',
-              ),
-            ),
-            trailing: Switch(
-              value: value,
-              onChanged: onChanged,
-              activeColor: Colors.blue,
-            ),
+          _buildSwitchTile(
+            Icons.notifications,
+            'Push Notifications',
+            _pushNotification,
+            (value) {
+              setState(() {
+                _pushNotification = value;
+              });
+            },
           ),
+          const Divider(),
+          _buildSwitchTile(
+            Icons.email,
+            'Promos via Email',
+            _promoEmail,
+            (value) {
+              setState(() {
+                _promoEmail = value;
+              });
+            },
+          ),
+          const Divider(),
+          _buildMenuItem(
+            Icons.account_circle,
+            'Account Settings',
+            () {},
+          ),
+          const Divider(),
+          _buildMenuItem(
+            Icons.info,
+            'About App',
+            () {},
+          ),
+          const Divider(),
+          _buildMenuItem(
+            Icons.payment,
+            'Payment Method',
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const PaymentMethodScreen()),
+              );
+            },
+          ),
+          const Divider(),
+          _buildMenuItem(
+            Icons.privacy_tip,
+            'Privacy Policy',
+            () {},
+          ),
+          const Divider(),
+          _buildLogoutTile(),
         ],
       ),
     );
   }
 
-  void _showUnderDevelopmentDialog(BuildContext context) {
+  Widget _buildSwitchTile(
+    IconData icon,
+    String title,
+    bool value,
+    ValueChanged<bool> onChanged,
+  ) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        size: 24,
+        color: Colors.blue,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+          fontFamily: 'Nunito',
+        ),
+      ),
+      trailing: Switch(
+        value: value,
+        onChanged: onChanged,
+        activeColor: Colors.blue,
+      ),
+    );
+  }
+
+  Widget _buildMenuItem(
+    IconData icon,
+    String title,
+    VoidCallback onTap,
+  ) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        size: 24,
+        color: Colors.blue,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+          fontFamily: 'Nunito',
+        ),
+      ),
+      onTap: onTap,
+    );
+  }
+
+  Widget _buildLogoutTile() {
+    return ListTile(
+      leading: const Icon(
+        Icons.logout,
+        size: 24,
+        color: Colors.red,
+      ),
+      title: const Text(
+        'Logout',
+        style: TextStyle(
+          fontSize: 16,
+          fontFamily: 'Nunito',
+          color: Colors.red,
+        ),
+      ),
+      onTap: () {
+        _showLogoutDialog(context);
+      },
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
+        return AlertDialog(
+          title: const Text('Logout Confirmation'),
+          content: const Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    'Under Development',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Nunito',
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    'This feature is still under development.',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Nunito',
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: const Text(
-                    'OK',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Nunito',
-                    ),
-                  ),
-                ),
-              ],
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed('/');
+              },
+              child: const Text('Logout'),
             ),
-          ),
+          ],
         );
       },
     );

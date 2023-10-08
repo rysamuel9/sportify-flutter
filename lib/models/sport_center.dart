@@ -133,7 +133,7 @@ var sportCenterList = {
       ],
     ),
   ],
-  'Berenang': [
+  'Swimming': [
     SportCenter(
       name: 'Kolam Renang Damai Indah Golf',
       location: 'Jalan Bukti Golf 1, Sektor VI, Serpong, Tangerang Selatan',

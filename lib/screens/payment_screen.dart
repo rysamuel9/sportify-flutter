@@ -64,18 +64,23 @@ class PaymentScreen extends StatelessWidget {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          _showLoadingDialog(context);
+                          _simulatePayment(context);
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             vertical: 16,
                             horizontal: 32,
                           ),
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
                         ),
                         child: const Text(
                           'Pay Now',
                           style: TextStyle(
                             fontSize: 18,
+                            color: Colors.white,
                             fontFamily: 'Nunito',
                           ),
                         ),
@@ -115,7 +120,7 @@ class PaymentScreen extends StatelessWidget {
     );
   }
 
-  void _showLoadingDialog(BuildContext context) {
+  void _simulatePayment(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -127,35 +132,37 @@ class PaymentScreen extends StatelessWidget {
 
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context, rootNavigator: true).pop();
-      _showPaymentSuccessDialog(context);
+      _showPaymentResultDialog(context, true);
     });
   }
 
-  void _showPaymentSuccessDialog(BuildContext context) {
+  void _showPaymentResultDialog(BuildContext context, bool isSuccess) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Row(
+          title: Row(
             children: [
               Icon(
-                Icons.check_circle,
-                color: Colors.green,
+                isSuccess ? Icons.check_circle : Icons.error,
+                color: isSuccess ? Colors.green : Colors.red,
                 size: 32,
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
-                'Payment Successful',
-                style: TextStyle(
+                isSuccess ? 'Payment Successful' : 'Payment Failed',
+                style: const TextStyle(
                   fontSize: 20,
                   fontFamily: 'Nunito',
                 ),
               ),
             ],
           ),
-          content: const Text(
-            'Your payment has been successfully processed.',
-            style: TextStyle(
+          content: Text(
+            isSuccess
+                ? 'Your payment has been successfully processed.'
+                : 'Payment processing failed. Please try again.',
+            style: const TextStyle(
               fontSize: 16,
               fontFamily: 'Nunito',
             ),
@@ -165,10 +172,14 @@ class PaymentScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
               child: const Text(
                 'OK',
                 style: TextStyle(
                   fontSize: 16,
+                  color: Colors.white,
                   fontFamily: 'Nunito',
                 ),
               ),

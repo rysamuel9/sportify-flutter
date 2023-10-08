@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CategoryCard extends StatelessWidget {
   final String categoryName;
-  final IconData categoryIcon;
+  final String svgIconPath;
 
   const CategoryCard({
     Key? key,
     required this.categoryName,
-    required this.categoryIcon,
+    required this.svgIconPath,
   }) : super(key: key);
 
   @override
@@ -20,29 +21,25 @@ class CategoryCard extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(
-              categoryIcon,
-              size: 40,
-              color: Colors.blue,
+            SvgPicture.asset(
+              svgIconPath,
+              height: 40,
             ),
             const SizedBox(height: 10),
-            Flexible(
-              child: Text(
-                categoryName,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontFamily: 'Nunito',
-                ),
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
+            Text(
+              categoryName,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontFamily: 'Nunito',
               ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

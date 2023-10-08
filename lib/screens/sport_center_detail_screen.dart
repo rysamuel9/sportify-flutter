@@ -1,8 +1,10 @@
+import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:sportify/screens/payment_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:photo_view/photo_view.dart';
 import '../models/sport_center.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class SportCenterDetailScreen extends StatefulWidget {
   final SportCenter sportCenter;
@@ -196,6 +198,51 @@ class _SportCenterDetailScreenState extends State<SportCenterDetailScreen> {
     );
   }
 
+  // Fix Soon (Open in another app)
+  // Widget buildLocationInfo(String label, String location) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         label,
+  //         style: const TextStyle(
+  //           fontSize: 18,
+  //           fontWeight: FontWeight.bold,
+  //           fontFamily: 'Nunito',
+  //         ),
+  //       ),
+  //       GestureDetector(
+  //         onTap: () {
+  //           _launchMapSearch(location);
+  //         },
+  //         child: Text(
+  //           location,
+  //           style: const TextStyle(
+  //             fontSize: 18,
+  //             fontFamily: 'Nunito',
+  //             decoration: TextDecoration.underline,
+  //             color: Colors.blue,
+  //           ),
+  //         ),
+  //       ),
+  //       const SizedBox(height: 12),
+  //     ],
+  //   );
+  // }
+
+  // Fix Soon (Open in another app)
+  // Future<void> _launchMapSearch(String location) async {
+  //   final encodedLocation = Uri.encodeComponent(location);
+  //   final googleMapsUrl =
+  //       'https://www.google.com/maps/search/?api=1&query=$encodedLocation';
+
+  //   if (await canLaunch(googleMapsUrl)) {
+  //     await launch(googleMapsUrl);
+  //   } else {
+  //     throw 'Could not launch $googleMapsUrl';
+  //   }
+  // }
+
   void _showImageModal(BuildContext context, String imageUrl) {
     showDialog(
       context: context,
@@ -253,7 +300,7 @@ class _SportCenterDetailScreenState extends State<SportCenterDetailScreen> {
                 child: _isDateLoading
                     ? const CircularProgressIndicator()
                     : const Icon(
-                        Icons.calendar_today,
+                        FeatherIcons.calendar,
                         size: 30,
                       ),
               ),
@@ -285,7 +332,7 @@ class _SportCenterDetailScreenState extends State<SportCenterDetailScreen> {
                 child: _isTimeLoading
                     ? const CircularProgressIndicator()
                     : const Icon(
-                        Icons.access_time,
+                        FeatherIcons.clock,
                         size: 30,
                       ),
               ),

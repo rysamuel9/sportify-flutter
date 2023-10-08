@@ -1,5 +1,6 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:sportify/screens/setting_screen.dart';
 import '../models/booking_history_model.dart';
 import '../widgets/booking_history.dart';
@@ -19,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // ignore: unused_field
   int _currentIndex = 0;
-  
+
   final FocusNode _searchFocusNode = FocusNode();
 
   final PageController _pageController = PageController();
@@ -39,18 +40,30 @@ class _HomeScreenState extends State<HomeScreen> {
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: TextField(
-              focusNode: _searchFocusNode,
-              decoration: InputDecoration(
-                hintText: 'Search sports places...',
-                hintStyle: const TextStyle(color: Colors.grey),
-                prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                contentPadding: const EdgeInsets.all(10),
+          title: Center(
+            child: Container(
+              margin: const EdgeInsets.only(
+                  top: 20, bottom: 4, left: 16, right: 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                children: <Widget>[
+                  const Icon(Icons.search, color: Colors.grey),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      focusNode: _searchFocusNode,
+                      decoration: const InputDecoration(
+                        hintText: 'Search sports places...',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(10),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -69,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
         onPageChanged: (index) {
           setState(() {
             _currentIndex = index;
-
           });
         },
         children: <Widget>[
@@ -78,22 +90,37 @@ class _HomeScreenState extends State<HomeScreen> {
           const SettingScreen(),
         ],
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
-        color: Colors.blue,
-        height: 50,
-        items: const <Widget>[
-          Icon(Icons.home, size: 30),
-          Icon(Icons.qr_code, size: 30),
-          Icon(Icons.settings, size: 30),
-        ],
-        onTap: (index) {
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-          );
-        },
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(16.0),
+            topRight: Radius.circular(16.0),
+          ),
+          border: Border.all(color: Colors.grey[300]!),
+        ),
+        child: SalomonBottomBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+              _pageController.jumpToPage(index);
+            });
+          },
+          items: [
+            SalomonBottomBarItem(
+              icon: const Icon(FeatherIcons.home),
+              title: const Text("Home"),
+            ),
+            SalomonBottomBarItem(
+              icon: const Icon(FeatherIcons.camera),
+              title: const Text("QR Code"),
+            ),
+            SalomonBottomBarItem(
+              icon: const Icon(FeatherIcons.settings),
+              title: const Text("Settings"),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -101,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildHomeScreen() {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
             const UserCard(
@@ -133,9 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  child: const CategoryCard(
-                    categoryName: 'Futsal',
-                    categoryIcon: Icons.sports_soccer,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: Colors.blue,
+                    child: const CategoryCard(
+                      categoryName: 'Futsal',
+                      svgIconPath: 'assets/football.svg',
+                    ),
                   ),
                 ),
                 GestureDetector(
@@ -147,9 +178,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  child: const CategoryCard(
-                    categoryName: 'Footabll',
-                    categoryIcon: Icons.sports_volleyball,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: Colors.blue,
+                    child: const CategoryCard(
+                      categoryName: 'Football',
+                      svgIconPath: 'assets/football.svg',
+                    ),
                   ),
                 ),
                 GestureDetector(
@@ -157,13 +192,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) =>
-                            const CategoryListScreen(categoryName: 'Berenang'),
+                            const CategoryListScreen(categoryName: 'Swimming'),
                       ),
                     );
                   },
-                  child: const CategoryCard(
-                    categoryName: 'Swimming',
-                    categoryIcon: Icons.pool,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: Colors.blue,
+                    child: const CategoryCard(
+                      categoryName: 'Swimming',
+                      svgIconPath: 'assets/swimming_pool.svg',
+                    ),
                   ),
                 ),
                 GestureDetector(
@@ -175,9 +214,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  child: const CategoryCard(
-                    categoryName: 'Badminton',
-                    categoryIcon: Icons.sports_tennis,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: Colors.blue,
+                    child: const CategoryCard(
+                      categoryName: 'Badminton',
+                      svgIconPath: 'assets/shuttlecock.svg',
+                    ),
                   ),
                 ),
                 GestureDetector(
@@ -189,9 +232,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  child: const CategoryCard(
-                    categoryName: 'Basketball',
-                    categoryIcon: Icons.sports_basketball,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: Colors.blue,
+                    child: const CategoryCard(
+                      categoryName: 'Basketball',
+                      svgIconPath: 'assets/basketball.svg',
+                    ),
                   ),
                 ),
                 GestureDetector(
@@ -203,9 +250,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  child: const CategoryCard(
-                    categoryName: 'Tennis',
-                    categoryIcon: Icons.sports_tennis,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(10),
+                    splashColor: Colors.blue,
+                    child: const CategoryCard(
+                      categoryName: 'Tennis',
+                      svgIconPath: 'assets/long_tennis.svg',
+                    ),
                   ),
                 ),
               ],
