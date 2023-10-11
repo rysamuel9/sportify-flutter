@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         children: <Widget>[
           _buildHomeScreen(),
-          const QRCodeScreen(userData: 'QRSamuel'),
+          const QRCodeScreen(userData: 'QRUser'),
           const SettingScreen(),
         ],
       ),

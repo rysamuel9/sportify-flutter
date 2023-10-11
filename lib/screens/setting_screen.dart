@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'about_app_screen.dart';
+import 'account_setting_screen.dart';
 import 'payment_method_screen.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -45,13 +47,24 @@ class _SettingScreenState extends State<SettingScreen> {
           _buildMenuItem(
             Icons.account_circle,
             'Account Settings',
-            () {},
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AccountSettingsScreen()),
+              );
+            },
           ),
           const Divider(),
           _buildMenuItem(
             Icons.info,
             'About App',
-            () {},
+            () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AboutAppScreen()),
+              );
+            },
           ),
           const Divider(),
           _buildMenuItem(

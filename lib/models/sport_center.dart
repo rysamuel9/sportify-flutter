@@ -216,4 +216,20 @@ var sportCenterList = {
       ],
     ),
   ],
+  'Badminton': [
+    SportCenter(
+      name: 'Candra Wijaya International Badminton Centre',
+      location:
+          'Jl. Jelupang Raya No.15, Jelupang, Kec. Serpong Utara, Kota Tangerang Selatan, Banten 15323',
+      openDays: 'Setiap Hari',
+      openTime: '07:00 - 10:00',
+      bookingPrice: 'Rp 180.000',
+      imageAsset: 'images/sportcenter/badminton_1.jpg',
+      imageUrls: [
+        'https://lh3.googleusercontent.com/p/AF1QipNbHnGk3pUJI6lM0ni36RLOr6TWdjb6SfHVuczd=s1360-w1360-h1020',
+        'https://lh3.googleusercontent.com/p/AF1QipORaMlq7NQzwRwkqMqeX6csSGqpTub5ZbLIoJAo=s1360-w1360-h1020',
+        'https://lh3.googleusercontent.com/p/AF1QipPFTWf9e0valI_qgO4JnAErbKsOH1vK2YioqMIX=s1360-w1360-h1020'
+      ],
+    ),
+  ],
 };

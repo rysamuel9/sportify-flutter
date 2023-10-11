@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sportify/screens/home_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+  const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -78,17 +79,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   List<Widget> _buildPageIndicator() {
     List<Widget> indicators = [];
     for (int i = 0; i < slides.length; i++) {
-      indicators.add(
-        Container(
-          width: 8.0,
-          height: 8.0,
-          margin: const EdgeInsets.symmetric(horizontal: 4.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: _currentPage == i ? Colors.blue : Colors.grey,
-          ),
+      indicators.add(Container(
+        width: 8.0,
+        height: 8.0,
+        margin: const EdgeInsets.symmetric(horizontal: 4.0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: _currentPage == i ? Colors.blue : Colors.grey,
         ),
-      );
+      ));
     }
     return indicators;
   }
@@ -100,21 +99,23 @@ class OnboardingPage extends StatelessWidget {
   final VoidCallback onGetStartedPressed;
 
   const OnboardingPage({
-    super.key,
+    Key? key,
     required this.slide,
     required this.isLastPage,
     required this.onGetStartedPressed,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.network(
-          slide.imagePath,
+        CachedNetworkImage(
+          imageUrl: slide.imagePath,
+          placeholder: (context, url) => const CircularProgressIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+          fit: BoxFit.cover,
           width: double.infinity,
           height: double.infinity,
-          fit: BoxFit.cover,
         ),
         Center(
           child: Column(
