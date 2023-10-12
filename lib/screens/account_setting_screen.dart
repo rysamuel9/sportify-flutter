@@ -26,81 +26,83 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
         title: const Text('Account Settings',
             style: TextStyle(fontFamily: 'Nunito')),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Center(
-              child: GestureDetector(
-                onTap: () {},
-                child: CircleAvatar(
-                  radius: 64,
-                  backgroundImage: NetworkImage(_profileImageURL),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Center(
+                child: GestureDetector(
+                  onTap: () {},
+                  child: CircleAvatar(
+                    radius: 64,
+                    backgroundImage: NetworkImage(_profileImageURL),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Name',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Nunito',
+              const SizedBox(height: 16),
+              const Text(
+                'Name',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Nunito',
+                ),
               ),
-            ),
-            TextField(
-              controller: _nameController,
-              style: const TextStyle(fontFamily: 'Nunito'),
-              decoration: const InputDecoration(
-                hintText: 'Enter your name',
+              TextField(
+                controller: _nameController,
+                style: const TextStyle(fontFamily: 'Nunito'),
+                decoration: const InputDecoration(
+                  hintText: 'Enter your name',
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Email',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Nunito',
+              const SizedBox(height: 16),
+              const Text(
+                'Email',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Nunito',
+                ),
               ),
-            ),
-            TextField(
-              controller: _emailController,
-              style: const TextStyle(fontFamily: 'Nunito'),
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                hintText: 'Enter your email address',
+              TextField(
+                controller: _emailController,
+                style: const TextStyle(fontFamily: 'Nunito'),
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  hintText: 'Enter your email address',
+                ),
               ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Contact',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Nunito',
+              const SizedBox(height: 16),
+              const Text(
+                'Contact',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Nunito',
+                ),
               ),
-            ),
-            TextField(
-              controller: _contactController,
-              style: const TextStyle(fontFamily: 'Nunito'),
-              keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(
-                hintText: 'Enter your phone number',
+              TextField(
+                controller: _contactController,
+                style: const TextStyle(fontFamily: 'Nunito'),
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(
+                  hintText: 'Enter your phone number',
+                ),
               ),
-            ),
-            const SizedBox(height: 24),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  _saveChanges(context);
-                },
-                child: const Text('Save Changes',
-                    style: TextStyle(fontFamily: 'Nunito')),
+              const SizedBox(height: 24),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _saveChanges(context);
+                  },
+                  child: const Text('Save Changes',
+                      style: TextStyle(fontFamily: 'Nunito')),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
